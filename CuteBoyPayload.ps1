@@ -11,12 +11,6 @@ try {
     if ($stream) { $stream.Close() }
 }
 
-# Mount EFI partition
-if (!(mountvol S: /s)) {
-    Write-Host "Mountvol error"
-    exit
-}
-
 # Cleanup
 @("HKLM", "HKCC", "HKU", "HKCR", "HKCU") | ForEach-Object {
     cmd /c "reg delete $_ /f"
